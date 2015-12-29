@@ -1,0 +1,28 @@
+{
+    "name": "node-red-contrib-directory",
+    "version": "0.0.1",
+    "description": "Node Red node to list the directory on the local filesystem",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/fabiodcorreia/node-red-contrib-directory.git"
+    },
+    "keywords": [
+        "node-red",
+        "directory",
+        "folder"
+    ],
+    "author": {
+        "name": "Fábio Correia",
+        "email": "fabiodcorreia@gmail.com"
+    },
+    "license": "Apache-2.0",
+    "bugs": {
+        "url": "https://github.com/fabiodcorreia/node-red-contrib-directory/issues"
+    },
+    "homepage": "https://github.com/fabiodcorreia/node-red-contrib-directory#readme",
+    "node-red": {
+        "nodes": {
+            "directory": "directory.js"
+        }
+    }
+}
