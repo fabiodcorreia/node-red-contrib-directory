@@ -14,33 +14,32 @@
     limitations under the License.
 -->
 <script type="text/javascript">
-RED.nodes.registerType("directory", {
-    category: "storage",
-    color: "#DEB887",
-    defaults: {
-        name: {
-            value: ""
+    RED.nodes.registerType("directory list", {
+        category: "storage",
+        color: "#DEB887",
+        defaults: {
+            name: {
+                value: ""
+            },
+            directory: {
+                value: ""
+            },
+            onlydir: {
+                value: false
+            },
+            filter: {
+                value: ""
+            }
         },
-        directory: {
-            value: "",
-            required: true
-        },
-        multimessage: {
-            value: false
-        },
-        onlydir: {
-            value: false
+        inputs: 1,
+        outputs: 1,
+        icon: "file.png",
+        label: function() {
+            return this.name || "Directory List";
         }
-    },
-    inputs: 1,
-    outputs: 1,
-    icon: "file.png",
-    label: function() {
-        return this.name || "directory";
-    }
-});
+    });
 </script>
-<script type="text/x-red" data-template-name="directory">
+<script type="text/x-red" data-template-name="directory list">
     <div class="form-row">
         <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
         <input type="text" id="node-input-name" placeholder="Name">
@@ -50,14 +49,14 @@ RED.nodes.registerType("directory", {
         <input type="text" id="node-input-directory" placeholder="Directory Path">
     </div>
     <div class="form-row">
-        <label for="node-input-multimessage"><i class="fa fa-sign-out"></i> Outputs a message per file</label>
-        <input type="checkbox" id="node-input-multimessage">
+        <label for="node-input-filter"><i class="fa fa-filter"></i> Filter</label>
+        <input type="text" id="node-input-filter" placeholder="/\w+/">
     </div>
     <div class="form-row">
         <label for="node-input-onlydir"><i class="fa fa-file"></i> Return only directories</label>
         <input type="checkbox" id="node-input-onlydir">
     </div>
 </script>
-<script type="text/x-red" data-help-name="directory">
+<script type="text/x-red" data-help-name="directory list">
     <p>Returns the list of files/directories inside the selected directory</p>
 </script>

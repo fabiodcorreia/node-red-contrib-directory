@@ -24,5 +24,17 @@
         "nodes": {
             "directory": "directory.js"
         }
+    },
+    "devDependencies": {
+        "mocha": "*",
+        "should": "*",
+        "sinon": "*",
+        "supertest": "*",
+        "when": "*",
+        "express" : "*",
+        "node-red" : "*"
+    },
+    "scripts": {
+        "test": "./node_modules/mocha/bin/mocha ./test/directory_spec.js"
     }
 }

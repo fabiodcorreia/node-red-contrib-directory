@@ -17,45 +17,44 @@
 module.exports = function(RED) {
     "use strict";
 
-    var fs = require('fs');
+    var fs = require("fs");
+    var path = require("path");
 
     function DirectoryList(config) {
         RED.nodes.createNode(this, config);
+
         var node = this;
+        var filter = config.filter;
+        var dir = config.directory;
+        var onlydir = config.onlydir;
+        var dirContent = [];
+
         node.on("input", function(msg) {
-            var dirContent = [];
-            if (config.directory) {
-                fs.readdir(config.directory, function(err, files) {
+            if (dir) {
+                fs.readdir(dir, function(err, files) {
                     if (err) {
                         node.error(err, msg);
                     } else {
                         files.forEach(function(f) {
-                            var dirNode = {
-                                "name": f,
-                                "path":config.directory+"/"+f,
-                                "isDir": fs.statSync(config.directory+"/"+f).isDirectory()
-                            };
-                            if(!config.onlydir || dirNode.isDir){
-                                dirContent.push(dirNode);
+                            if (!filter || f.match(filter)) {
+                                var dirNode = {
+                                    "name": f,
+                                    "path": path.join(dir, f),
+                                    "isDir": fs.statSync(path.join(dir, f)).isDirectory()
+                                };
+                                if (!onlydir || dirNode.isDir) {
+                                    dirContent.push(dirNode);
+                                }
                             }
                         });
                     }
-                    if(config.multimessage){
-                        var msgs = [];
-                        dirContent.forEach(function(obj){
-                            var newMessage = RED.util.cloneMessage(msg);
-                            newMessage.payload = obj;
-                            node.send(newMessage);
-                        });
-                    } else {
-                        msg.payload = dirContent;
-                        node.send(msg);
-                    }
+                    msg.payload = dirContent;
+                    node.send(msg);
                 });
             } else {
                 node.error("Absolute path for directory not set", msg);
             }
         });
     }
-    RED.nodes.registerType("directory", DirectoryList);
+    RED.nodes.registerType("directory list", DirectoryList);
 };
